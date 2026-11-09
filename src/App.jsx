@@ -17,6 +17,7 @@ export default function App(){
  const notify=m=>{setToast(m);window.setTimeout(()=>setToast(''),2600)};
  async function load(){if(!db)return;const [m,o,s]=await Promise.all([db.from('menu_items').select('*').order('created_at'),db.from('orders').select('*').eq('order_date',today()).order('created_at',{ascending:false}),db.from('daily_orders').select('*').eq('order_date',today()).maybeSingle()]);if(!m.error)setItems(m.data||[]);if(!o.error)setOrders(o.data||[]);if(s.data){setOrderOpen(s.data.is_open);setTitle(s.data.title)}}
  useEffect(()=>{if(!db)return;db.auth.getSession().then(({data})=>setSession(data.session));const {data:{subscription}}=db.auth.onAuthStateChange((_e,s)=>setSession(s));load();return()=>subscription.unsubscribe()},[]);
+ useEffect(()=>{if(db&&session)load()},[session]);
  const active=items.filter(x=>x.active!==false),shown=orders.filter(o=>filter==='all'||o.status===filter);
  const total=orders.reduce((a,o)=>a+(o.items||[]).reduce((b,i)=>b+Number(i.price||0)*Number(i.quantity||1),0),0);
  const qty=useMemo(()=>orders.reduce((a,o)=>a+(o.items||[]).reduce((b,i)=>b+Number(i.quantity||1),0),0),[orders]);
