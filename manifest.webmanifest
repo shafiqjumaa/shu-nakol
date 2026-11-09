@@ -1,0 +1,11 @@
+{
+  "name":"شو ناكل؟ - طلبات الشركة",
+  "short_name":"شو ناكل؟",
+  "start_url":"/",
+  "display":"standalone",
+  "background_color":"#f6f7f4",
+  "theme_color":"#123c2f",
+  "lang":"ar",
+  "dir":"rtl",
+  "icons":[]
+}
